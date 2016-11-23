@@ -2,6 +2,13 @@
 
 From [this instructions](http://www.hark.jp/wiki.cgi?page=HARK-ROS-TURTLEBOT+Installation+Instructions).
 
+Adding to `/etc/apt/sources.list.d/hark.list`:
+
+```
+deb http://winnie.kuis.kyoto-u.ac.jp/HARK/harkrepos precise non-free
+deb-src http://winnie.kuis.kyoto-u.ac.jp/HARK/harkrepos precise non-free
+```
+
 ## Install necessary components
 
 ```bash
