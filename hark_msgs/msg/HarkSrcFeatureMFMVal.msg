@@ -1,0 +1,13 @@
+int32 id
+float32 power
+float32 x
+float32 y
+float32 z
+float32 azimuth
+float32 elevation
+int32 length_feature
+int32 data_bytes_feature
+float32[] featuredata_feature
+int32 length_mfm
+int32 data_bytes_mfm
+float32[] featuredata_mfm

@@ -1,0 +1,36 @@
+<package>
+  <name>hark_msgs</name>
+  <version>0.1.0</version>
+  <description>hark_msgs</description>
+  <maintainer email="m.iihara@jp.honda-ri.com">m.iihara</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://ros.org/wiki/hark_msgs</url>
+  <!-- <url type="bugtracker"></url> -->
+
+  <author>Keisuke Nakamura</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+  <build_depend>roscpp</build_depend>
+  <build_depend>roslib</build_depend>
+  <build_depend>rospy</build_depend>
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>roscpp</run_depend>
+  <run_depend>roslib</run_depend>
+  <run_depend>rospy</run_depend>
+
+  <!-- Dependencies needed only for running tests. -->
+  <!-- <test_depend>roscpp</test_depend> -->
+  <!-- <test_depend>roslib</test_depend> -->
+  <!-- <test_depend>rospy</test_depend> -->
+
+<export>
+    <cpp cflags="-I${prefix}/include -I${prefix}/msg/cpp -I${prefix}/srv/cpp"/>
+</export>
+
+</package>

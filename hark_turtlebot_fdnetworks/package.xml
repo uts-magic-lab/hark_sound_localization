@@ -1,0 +1,16 @@
+<package>
+  <name>hark_turtlebot_fdnetworks</name>
+  <description> hark_turtlebot_fdnetworks </description>
+  <version>0.0.1</version>
+
+  <author>Keisuke Nakamura</author>
+  <maintainer email="Sammy.Pfeiffer@student.uts.edu.au">Sammy Pfeiffer</maintainer>
+  <license>BSD</license>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>harkfd</run_depend>
+  <run_depend>hark-ros-hydro</run_depend>
+
+</package>
+
+
