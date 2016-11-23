@@ -10,7 +10,7 @@
     <Node name="node_RosNodeGenerator_1" type="RosNodeGenerator" x="-14.000000" y="232.000000">
       <Parameter name="NODE_NAME" type="string" value="hark_master_node" description="Node name for ROS"/>
     </Node>
-    <NetOutput name="OUTPUT_1" node="node_MAIN_LOOP_1" terminal="OUTPUT_1" object_type="any" description="No description available"/>
+<!--     <NetOutput name="OUTPUT_1" node="node_MAIN_LOOP_1" terminal="OUTPUT_1" object_type="any" description="No description available"/> -->
     <NetOutput name="OUTPUT_2" node="node_MAIN_LOOP_1" terminal="OUTPUT_2" object_type="any" description="No description available"/>
     <NetOutput name="VALUE" node="node_RosNodeGenerator_1" terminal="VALUE" object_type="int" description="int parameter"/>
     <Note x="0" y="0" visible="0" text="Created with FlowDesigner 0.9.1"/>
@@ -58,9 +58,9 @@
       <Parameter name="MIN_ID" type="int" value="0" description="Minimum ID of source locations. MIN_ID should be greater than 0 or equal."/>
       <Parameter name="DEBUG" type="bool" value="false" description="Output debug information if true [default: false]"/>
     </Node>
-    <Node name="node_DisplayLocalization_1" type="DisplayLocalization" x="942.000000" y="145.000000">
+    <!-- <Node name="node_DisplayLocalization_1" type="DisplayLocalization" x="942.000000" y="145.000000">
       <Parameter name="WINDOW_LENGTH" type="int" value="1000" description="Window length to show at the same time [sample]"/>
-    </Node>
+    </Node> -->
     <Node name="node_RosHarkMsgsPublisher_1" type="RosHarkMsgsPublisher" x="1058.000000" y="243.000000">
       <Parameter name="ADVANCE" type="int" value="160" description="Shift sample number for sliding spectrum analysis."/>
       <Parameter name="ENABLE_DEBUG" type="bool" value="false" description="print debug message of this module in case of true."/>
@@ -80,11 +80,11 @@
     </Node>
     <Link from="node_AudioStreamFromMic_1" output="AUDIO" to="node_MultiFFT_1" input="INPUT"/>
     <Link from="node_MultiFFT_1" output="OUTPUT" to="node_LocalizeMUSIC_1" input="INPUT"/>
-    <Link from="node_SourceTracker_1" output="OUTPUT" to="node_DisplayLocalization_1" input="SOURCES"/>
+    <!-- <Link from="node_SourceTracker_1" output="OUTPUT" to="node_DisplayLocalization_1" input="SOURCES"/> -->
     <Link from="node_SourceTracker_1" output="OUTPUT" to="node_RosHarkMsgsPublisher_1" input="SRC_INFO"/>
     <Link from="node_LocalizeMUSIC_1" output="OUTPUT" to="node_SourceTracker_1" input="INPUT"/>
     <NetCondition name="CONDITION" node="node_AudioStreamFromMic_1" terminal="NOT_EOF"/>
-    <NetOutput name="OUTPUT_1" node="node_DisplayLocalization_1" terminal="OUTPUT" object_type="Vector&lt;ObjectRef&gt;" description="The same as input."/>
+    <!-- <NetOutput name="OUTPUT_1" node="node_DisplayLocalization_1" terminal="OUTPUT" object_type="Vector&lt;ObjectRef&gt;" description="The same as input."/> -->
     <NetOutput name="OUTPUT_2" node="node_RosHarkMsgsPublisher_1" terminal="OUTPUT" object_type="ObjectRef" description="This is a dummy output, and it has no mean. Only for an activation of this module."/>
     <Note x="0" y="0" visible="0" text="Created with FlowDesigner 0.9.1"/>
   </Network>
