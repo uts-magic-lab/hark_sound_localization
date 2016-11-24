@@ -1,7 +1,7 @@
 #!/bin/sh
 
 TF=`rospack find hark_turtlebot_fdnetworks`/networks/TF/kinect_final.zip
-DEVICE=plughw:0,0
+DEVICE=plug:mixin
 
 echo ""
 echo "Location of your TF file : $TF"
