@@ -1,0 +1,93 @@
+#!/usr/bin/env batchflow
+<?xml version="1.0"?>
+<Document>
+  <Network type="subnet" name="MAIN">
+    <Node name="node_MAIN_LOOP_1" type="MAIN_LOOP" x="-47.000000" y="106.000000">
+      <Parameter name="DEVICE" type="subnet_param" value="ARG2" description="Device name or IP address [default: 127.0.0.1]"/>
+      <Parameter name="LOCALIZATION_TF" type="subnet_param" value="ARG1" description="Filename of a transfer function matrix."/>
+      <Parameter name="DOWHILE" type="bool" value="" description=""/>
+    </Node>
+    <Node name="node_RosNodeGenerator_1" type="RosNodeGenerator" x="-14.000000" y="232.000000">
+      <Parameter name="NODE_NAME" type="string" value="hark_master_node" description="Node name for ROS"/>
+    </Node>
+<!--     <NetOutput name="OUTPUT_1" node="node_MAIN_LOOP_1" terminal="OUTPUT_1" object_type="any" description="No description available"/> -->
+    <NetOutput name="OUTPUT_2" node="node_MAIN_LOOP_1" terminal="OUTPUT_2" object_type="any" description="No description available"/>
+    <NetOutput name="VALUE" node="node_RosNodeGenerator_1" terminal="VALUE" object_type="int" description="int parameter"/>
+    <Note x="0" y="0" visible="0" text="Created with FlowDesigner 0.9.1"/>
+  </Network>
+  <Network type="iterator" name="MAIN_LOOP">
+    <Node name="node_AudioStreamFromMic_1" type="AudioStreamFromMic" x="163.000000" y="145.000000">
+      <Parameter name="LENGTH" type="int" value="512" description="The frame length of each channel (in samples) [default: 512]."/>
+      <Parameter name="ADVANCE" type="int" value="160" description="The shift length beween adjacent frames (in samples)[default: 160]."/>
+      <Parameter name="CHANNEL_COUNT" type="int" value="7" description="The number of channels."/>
+      <Parameter name="SAMPLING_RATE" type="int" value="16000" description="Sampling rate (Hz) [default: 16000]."/>
+      <Parameter name="DEVICETYPE" type="string" value="ALSA" description="Device type [default: WS]."/>
+      <Parameter name="GAIN" type="string" value="0dB" description="capture gain (dB)  [default: 0]."/>
+      <Parameter name="DEVICE" type="subnet_param" value="DEVICE" description="Device name or IP address [default: 127.0.0.1]"/>
+    </Node>
+    <Node name="node_MultiFFT_1" type="MultiFFT" x="422.000000" y="138.000000">
+      <Parameter name="LENGTH" type="int" value="512" description="FFT length in sample. [default: 512]"/>
+      <Parameter name="WINDOW" type="string" value="CONJ" description="A window function for FFT. WINDOW should be CONJ, HAMMING, RECTANGLE, or HANNING. [default: CONJ]"/>
+      <Parameter name="WINDOW_LENGTH" type="int" value="512" description="Window length of the window function. [default: 512]"/>
+    </Node>
+    <Node name="node_LocalizeMUSIC_1" type="LocalizeMUSIC" x="608.000000" y="145.000000">
+      <Parameter name="MUSIC_ALGORITHM" type="string" value="SEVD" description="Sound Source Localization Algorithm. If SEVD, NOISECM will be ignored"/>
+      <Parameter name="TF_CHANNEL_SELECTION" type="object" value="&lt;Vector&lt;int&gt; 0 1 2 3 4 5 6&gt;" description="Microphone channels for localization"/>
+      <Parameter name="LENGTH" type="int" value="512" description="The frame length of each channel (in samples) [default: 512]."/>
+      <Parameter name="SAMPLING_RATE" type="int" value="16000" description="Sampling rate (Hz) [default: 16000]."/>
+      <Parameter name="A_MATRIX" type="subnet_param" value="LOCALIZATION_TF" description="Filename of a transfer function matrix."/>
+      <Parameter name="ELEVATION" type="float" value="16.7" description="An angle of elevation for source locations in degree. [default: 15.0]"/>
+      <Parameter name="WINDOW" type="int" value="50" description="The number of frames used for calculating a correlation function."/>
+      <Parameter name="PERIOD" type="int" value="50" description="The number of frames used for calculating a correlation matrix. [default: 50]"/>
+      <Parameter name="NUM_SOURCE" type="int" value="1" description="Number of sources, which should be less than NB_CHANNELS [default: 2]."/>
+      <Parameter name="MIN_DEG" type="int" value="-180" description="Minimum source direction to localize in degree. [default: -180]"/>
+      <Parameter name="MAX_DEG" type="int" value="180" description="Maximum source direction to localize in degree. [default: 180]"/>
+      <Parameter name="LOWER_BOUND_FREQUENCY" type="int" value="500" description="Lower bound of frequency (Hz) used for correlation matrix calculation. [default: 500]"/>
+      <Parameter name="UPPER_BOUND_FREQUENCY" type="int" value="2800" description="Upper bound of frequency (Hz) used for correlation function matrix. [default: 2800]"/>
+      <Parameter name="SPECTRUM_WEIGHT_TYPE" type="string" value="Uniform" description="MUSIC spectrum weight for each frequency bin."/>
+      <Parameter name="A_CHAR_SCALING" type="float" value="1.0" description="Scaling factor of the A-Weight with respect to frequency"/>
+      <Parameter name="MANUAL_WEIGHT_SPLINE" type="object" value="&lt;Matrix&lt;float&gt; &lt;rows 2&gt; &lt;cols 5&gt; &lt;data 0.0 2000.0 4000.0 6000.0 8000.0 1.0 1.0 1.0 1.0 1.0&gt; &gt;" description="MUSIC spectrum weight for each frequency bin. This is a 2 by M matrix. The first row represents the frequency, and the second row represents the weight gain. &quot;M&quot; represents the number of key points for the spectrum weight. The frequency range between M key points will be interpolated by spline manner. The format is &quot;&lt;Matrix&lt;float&gt; &lt;rows 2&gt; &lt;cols 2&gt; &lt;data 1 2 3 4&gt; &gt;&quot;."/>
+      <Parameter name="MANUAL_WEIGHT_SQUARE" type="object" value="&lt;Vector&lt;float&gt; 0.0 2000.0 4000.0 6000.0 8000.0&gt;" description="MUSIC spectrum weight for each frequency bin. This is a M order vector. The element represents the frequency points for the square wave. &quot;M&quot; represents the number of key points for the square wave weight. The format is &quot;&lt;Vector&lt;float&gt; 1 2 3 4&gt;&quot;."/>
+      <Parameter name="ENABLE_EIGENVALUE_WEIGHT" type="bool" value="true" description="If true, the spatial spectrum is weighted depending on the eigenvalues of a correlation matrix. We do not suggest to use this function with GEVD and GSVD, because the NOISECM changes the eigenvalue drastically. Only useful for SEVD."/>
+      <Parameter name="DEBUG" type="bool" value="true" description="Debug option. If true, output sound localization results to standard output. [default: false]"/>
+    </Node>
+    <Node name="node_SourceTracker_1" type="SourceTracker" x="746.000000" y="145.000000">
+      <Parameter name="THRESH" type="float" value="26" description="Power threshold for localization results. A localization result with higher power than THRESH is tracked, otherwise ignored."/>
+      <Parameter name="PAUSE_LENGTH" type="float" value="800" description="Life duration of source in ms. When any localization result for a source is found for more than PAUSE_LENGTH / 10 iterations, the source is terminated. [default: 800]"/>
+      <Parameter name="MIN_SRC_INTERVAL" type="float" value="20" description="Source interval threshold in degree. When the angle between a localization result and a source is smaller than MIN_SRC_INTERVAL, the same ID is given to the localization result. [default: 20]"/>
+      <Parameter name="MIN_ID" type="int" value="0" description="Minimum ID of source locations. MIN_ID should be greater than 0 or equal."/>
+      <Parameter name="DEBUG" type="bool" value="false" description="Output debug information if true [default: false]"/>
+    </Node>
+    <!-- <Node name="node_DisplayLocalization_1" type="DisplayLocalization" x="942.000000" y="145.000000">
+      <Parameter name="WINDOW_LENGTH" type="int" value="1000" description="Window length to show at the same time [sample]"/>
+    </Node> -->
+    <Node name="node_RosHarkMsgsPublisher_1" type="RosHarkMsgsPublisher" x="1058.000000" y="243.000000">
+      <Parameter name="ADVANCE" type="int" value="160" description="Shift sample number for sliding spectrum analysis."/>
+      <Parameter name="ENABLE_DEBUG" type="bool" value="false" description="print debug message of this module in case of true."/>
+      <Parameter name="TOPIC_NAME_HARKWAVE" type="string" value="HarkWave" description="Published topic name for ROS (HarkWave type message)"/>
+      <Parameter name="TOPIC_NAME_HARKFFT" type="string" value="HarkFFT" description="Published topic name for ROS (HarkFFT type message)"/>
+      <Parameter name="TOPIC_NAME_HARKFEATURE" type="string" value="HarkFeature" description="Published topic name for ROS (HarkFeature type message)"/>
+      <Parameter name="TOPIC_NAME_HARKSOURCE" type="string" value="hark_source" description="Published topic name for ROS (HarkSource type message)"/>
+      <Parameter name="TOPIC_NAME_HARKSRCWAVE" type="string" value="HarkSrcWave" description="Published topic name for ROS (HarkSrcWave type message)"/>
+      <Parameter name="TOPIC_NAME_HARKSRCFFT" type="string" value="HarkSrcFFT" description="Published topic name for ROS (HarkSrcFFT type message)"/>
+      <Parameter name="TOPIC_NAME_HARKSRCFEATURE" type="string" value="HarkSrcFeature" description="Published topic name for ROS (HarkSrcFeature type message)"/>
+      <Parameter name="TOPIC_NAME_HARKSRCFEATUREMFM" type="string" value="HarkSrcFeatureMFM" description="Published topic name for ROS (HarkSrcFeatureMFM type message)"/>
+      <Parameter name="BUFFER_NUM" type="int" value="100" description="Buffer size for a ROS published message"/>
+      <Parameter name="ROS_LOOP_RATE" type="float" value="100000" description="This allows you to specify a frequency that you would like to loop at [Hz]. Keep this value large. (If ROS interval is shorter than HARK interval, ROS interval is overwritten.)"/>
+      <Parameter name="TIMESTAMP_TYPE" type="string" value="ROS_TIME_NOW" description="Time stamp type. If TIMESTAMP is connected, this is ignored."/>
+      <Parameter name="SAMPLING_RATE" type="int" value="16000" description="The time increment is caluculated as ADVANCE / SAMPLING_RATE"/>
+      <Parameter name="ROS_FRAME_ID" type="string" value="HarkRosFrameID" description="ROS frame_id of the message header"/>
+    </Node>
+    <Link from="node_AudioStreamFromMic_1" output="AUDIO" to="node_MultiFFT_1" input="INPUT"/>
+    <Link from="node_MultiFFT_1" output="OUTPUT" to="node_LocalizeMUSIC_1" input="INPUT"/>
+    <!-- <Link from="node_SourceTracker_1" output="OUTPUT" to="node_DisplayLocalization_1" input="SOURCES"/> -->
+    <Link from="node_SourceTracker_1" output="OUTPUT" to="node_RosHarkMsgsPublisher_1" input="SRC_INFO"/>
+    <Link from="node_LocalizeMUSIC_1" output="OUTPUT" to="node_SourceTracker_1" input="INPUT"/>
+    <NetCondition name="CONDITION" node="node_AudioStreamFromMic_1" terminal="NOT_EOF"/>
+    <!-- <NetOutput name="OUTPUT_1" node="node_DisplayLocalization_1" terminal="OUTPUT" object_type="Vector&lt;ObjectRef&gt;" description="The same as input."/> -->
+    <NetOutput name="OUTPUT_2" node="node_RosHarkMsgsPublisher_1" terminal="OUTPUT" object_type="ObjectRef" description="This is a dummy output, and it has no mean. Only for an activation of this module."/>
+    <Note x="0" y="0" visible="0" text="Created with FlowDesigner 0.9.1"/>
+  </Network>
+  <Parameter name="ARG2" type="" value=""/>
+  <Parameter name="ARG1" type="" value=""/>
+</Document>

@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="hark_turtlebot_fdnetworks" name="hark_sound_loc"
+        type="localization_ROS_microcone.sh" output="screen"/>
+</launch>
