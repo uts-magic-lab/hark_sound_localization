@@ -21,21 +21,21 @@ sudo apt-get install hark-ros-hydro
 Get the source from [here](http://www.hark.jp/src/1.2.0/hark-ros-turtlebot-stack-1.2.0.tar.gz).
 
 
-Extract `hark_turtlebot_fdnetworks` in a new workspace:
+Extract `hark_sound_source_localization` in a new workspace:
 
 ```bash
 mkdir ~/sound_loc_ws
 cd ~/sound_loc_ws
 mkdir src
 cd src
-cp YOURPATH/hark_turtlebot_fdnetworks .
+cp YOURPATH/hark_sound_source_localization .
 ```
 
 You'll need to compile the package with rosmake:
 
 ```bash
 export ROS_PACKAGE_PATH=~/sound_loc_ws/src:$ROS_PACKAGE_PATH
-rosmake hark_turtlebot_fdnetworks
+rosmake hark_sound_source_localization
 ```
 
 ## Setup your Kinect audio card
@@ -52,7 +52,7 @@ DEVICE=plughw:0,0
 If you try to run it now (`./localization_ROS.sh`) it will say something like:
 
 ```
-Location of your TF file : /home/demoshare/sam_stuff/sound_loc_ws/src/hark_turtlebot_fdnetworks/networks/TF/kinect_final.dat
+Location of your TF file : /home/demoshare/sam_stuff/sound_loc_ws/src/hark_sound_source_localization/networks/TF/kinect_final.dat
 
 ALSA Audio Device ID : plughw:0,0
 
@@ -106,7 +106,7 @@ harktoolcli-conv-tf -l kinect_final.dat -s kinect_final.tff -o kinect_final.zip
 And now change `localization_ROS.sh` to have:
 
 ```
-TF=`rospack find hark_turtlebot_fdnetworks`/networks/TF/kinect_final.zip
+TF=`rospack find hark_sound_source_localization`/networks/TF/kinect_final.zip
 ```
 
 Note it's `.zip` now and not `.dat`.

@@ -17,7 +17,7 @@ This has been tested on:
 For the PR2 Kinect, you'll need to enable the Kinect as an audio device first, follow [this instructions](pr2_kinect_audio.md). Then you can just run:
 
 ```bash
-roslaunch hark_turtlebot_fdnetworks pr2_kinect.launch
+roslaunch hark_sound_source_localization pr2_kinect.launch
 ```
 
 You'll find the topic `/hark_source` of type `hark_msgs/HarkSource` reporting where the audio comes from at 120Hz~ with messages looking like:
@@ -48,23 +48,23 @@ the audio came from.
 For the PSeye launch:
 
 ```
-roslaunch hark_turtlebot_fdnetworks pseye.launch 
+roslaunch hark_sound_source_localization pseye.launch 
 ```
 
 For the microcone launch:
 
 ```
-roslaunch hark_turtlebot_fdnetworks microcone.launch
+roslaunch hark_sound_source_localization microcone.launch
 ```
 
 # Change parameters
 
-If you need to change the device used you need to edit the file [localization_ROS_pseye.sh](hark_turtlebot_fdnetworks/nodes/localization_ROS_pseye.sh).
+If you need to change the device used you need to edit the file [localization_ROS_pseye.sh](hark_sound_source_localization/nodes/localization_ROS_pseye.sh).
 
 Change the line `DEVICE=plughw:1,0` to whatever suits you. You may use `arecord -L` to help find your device. If you need more than one device accesing at the microphone at the same time you can follow [these instructions](https://gist.github.com/awesomebytes/924493bcdb358f5e71fdff93c2896730#to-let-more-than-one-software-access-to-the-microphone).
 
 
-If you want to change the minimum power threshold on when localization (and tracking) happens you'll need to edit [localization_ROS_pseye.n](hark_turtlebot_fdnetworks/networks/localization_ROS_pseye.n), modify this line:
+If you want to change the minimum power threshold on when localization (and tracking) happens you'll need to edit [localization_ROS_pseye.n](hark_sound_source_localization/networks/localization_ROS_pseye.n), modify this line:
 
 ```
       <Parameter name="THRESH" type="float" value="35" description="Power threshold for localization results. A localization result with higher power than THRESH is tracked, otherwise ignored."/>
