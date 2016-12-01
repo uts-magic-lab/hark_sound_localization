@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(hark_turtlebot_fdnetworks)
+project(hark_sound_source_localization)
 
 find_package(catkin REQUIRED COMPONENTS roscpp)
 

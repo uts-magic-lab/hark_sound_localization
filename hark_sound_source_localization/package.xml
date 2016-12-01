@@ -1,6 +1,6 @@
 <package>
-  <name>hark_turtlebot_fdnetworks</name>
-  <description> hark_turtlebot_fdnetworks </description>
+  <name>hark_sound_source_localization</name>
+  <description> hark_sound_source_localization </description>
   <version>0.0.1</version>
 
   <author>Keisuke Nakamura</author>
