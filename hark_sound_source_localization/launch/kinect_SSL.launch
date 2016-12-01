@@ -1,3 +1,0 @@
-<launch>
-    <node pkg="hark_sound_source_localization" name="node_Hark_Turtlebot_SSL" type="localization.n"/>
-</launch>
