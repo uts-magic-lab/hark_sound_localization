@@ -8,7 +8,7 @@ Instructions on how to install the dependencies can be found at the start of [ne
 
 This has been tested on:
 
-* Ubuntu 12.04 64b on PR2 with a Kinect (old one) (ROS Hydro).
+* Ubuntu 12.04 64b on PR2 with a Kinect (old one) (ROS Hydro). [Watch it working](https://www.youtube.com/watch?v=B7THEridi7A).
 * Ubuntu 14.04 64b with PSeye (ROS Indigo).
 * Ubuntu 14.04 64b with microcone (ROS Indigo).
 
